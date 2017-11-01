@@ -135,13 +135,21 @@ class CommandDispatcher {
 					 */
 					this.client.emit('unknownCommand', cmdMsg);
 					if(this.client.options.unknownCommandResponse) {
-						responses = await cmdMsg.reply(
-							`Unknown command. Use ${cmdMsg.anyUsage(
-								'help',
-								message.guild ? undefined : null,
-								message.guild ? undefined : null
-							)} to view the list of all commands.`
-						);
+						// responses = await cmdMsg.reply(
+						// 	`Unknown command. Use ${cmdMsg.anyUsage(
+						// 		'help',
+						// 		message.guild ? undefined : null,
+						// 		message.guild ? undefined : null
+						// 	)} to view the list of all commands.`
+						// );
+
+						// responses = await cmdMsg.channel.send(
+						// 	`404. Command not found. Did you try ${cmdMsg.anyUsage(
+						// 		'help',
+						// 		message.guild ? undefined : null,
+						// 		message.guild ? undefined : null
+						// 	)}?`
+						// );
 					}
 				}
 			} else {

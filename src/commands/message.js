@@ -240,11 +240,25 @@ class CommandMessage {
 				}).join(owners.length > 2 ? ', ' : ' ') : '';
 
 				const invite = this.client.options.invite;
-				return this.reply(stripIndents`
-					An error occurred while running the command: \`${err.name}: ${err.message}\`
-					You shouldn't ever receive an error like this.
-					Please contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
-				`);
+				// return this.reply(stripIndents`
+				// 	An error occurred while running the command: \`${err.name}: ${err.message}\`
+				// 	You shouldn't ever receive an error like this.
+				// 	Please contact ${ownerList || 'the bot owner'}${invite ? ` in this server: ${invite}` : '.'}
+				// `);
+				return this.message.channel.send({
+					embed: {
+						color: "12542314",
+						author: {
+						  name: "An error has occurred.",
+						  icon_url: this.message.author.displayAvatarURL()
+						},
+						description: `${err.name}: ${err.message}`,
+						footer:	{
+							text: `Send all hate to ${ownerList || 'the bot owner'}. KTHX, BYE!`
+						},
+						timestamp: new Date()
+					}
+				})
 			}
 		}
 	}
