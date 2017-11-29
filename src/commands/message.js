@@ -191,7 +191,7 @@ class CommandMessage {
 					const err = new CommandFormatError(this);
 					return this.reply(err.message);
 				}
-				return this.reply('Cancelled command.');
+				return this.channel.send('Too late. Why not you try again?');
 			}
 			args = result.values;
 		}

@@ -104,7 +104,7 @@ class Argument {
 		 * How long to wait for input (in seconds)
 		 * @type {number}
 		 */
-		this.wait = typeof info.wait !== 'undefined' ? info.wait : 30;
+		this.wait = typeof info.wait !== 'undefined' ? info.wait : 10;
 	}
 
 	/**
@@ -155,12 +155,9 @@ class Argument {
 			}
 
 			// Prompt the user for a new value
-			prompts.push(await msg.reply(stripIndents`
-				${empty ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
-				${oneLine`
-					Respond with \`cancel\` to cancel the command.
-					${wait ? `The command will automatically be cancelled in ${this.wait} seconds.` : ''}
-				`}
+			prompts.push(await msg.channel.send(stripIndents`
+				${!value ? this.prompt : valid ? valid : `You provided an invalid ${this.label}. Please try again.`}
+				\`\`\`${`${wait ? `Psst! You can answer quickly in ${this.wait} seconds.` : ''} or reply "cancel".`}\`\`\`\
 			`));
 
 			// Get the user's response
@@ -239,7 +236,7 @@ class Argument {
 				// Prompt the user for a new value
 				if(value) {
 					const escaped = escapeMarkdown(value).replace(/@/g, '@\u200b');
-					prompts.push(await msg.reply(stripIndents`
+					prompts.push(await msg.channel.send(stripIndents`
 						${valid ? valid : oneLine`
 							You provided an invalid ${this.label},
 							"${escaped.length < 1850 ? escaped : '[too long to show]'}".
@@ -251,7 +248,7 @@ class Argument {
 						`}
 					`));
 				} else if(results.length === 0) {
-					prompts.push(await msg.reply(stripIndents`
+					prompts.push(await msg.channel.send(stripIndents`
 						${this.prompt}
 						${oneLine`
 							Respond with \`cancel\` to cancel the command, or \`finish\` to finish entry.
