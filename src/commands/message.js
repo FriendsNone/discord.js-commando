@@ -140,7 +140,7 @@ class CommandMessage {
 
 		if(this.command.nsfw && !this.message.channel.nsfw) {
 			this.client.emit('commandBlocked', this, 'nsfw');
-			return this.reply(`The \`${this.command.name}\` command can only be used in NSFW channels.`);
+			return this.channel.send('By the gods, are you mad! Just think about these poor souls.').then(this.delete());
 		}
 
 		// Ensure the user has permission to use the command
